@@ -30,27 +30,27 @@ Therefore, the file "mpox_30to110-2-0.5-1-0to-30-2.py" runs code for simulations
 
 ### Generate Results
 * Simulations with a range of intervention timings (behavior change scenario 2, isolation scenario 2 vaccination scenario 2)
-  * mpox_30to110-2-0.25-2-0to-30-2.py
-  * mpox_30to110-2-0.25-2-5to30-2.py
-  * mpox_30to110-2-0.5-2-0to-30-2.py
-  * mpox_30to110-2-0.5-2-5to30-2.py
-  * mpox_30to110-2-0.75-2-0to-30-2.py
-  * mpox_30to110-2-0.75-2-5to30-2.py
+  * [mpox_30to110-2-0.25-2-0to-30-2.py](mpox_30to110-2-0.25-2-0to-30-2.py)
+  * [mpox_30to110-2-0.25-2-5to30-2.py](mpox_30to110-2-0.25-2-5to30-2.py)
+  * [mpox_30to110-2-0.5-2-0to-30-2.py](mpox_30to110-2-0.5-2-0to-30-2.py)
+  * [mpox_30to110-2-0.5-2-5to30-2.py](mpox_30to110-2-0.5-2-5to30-2.py)
+  * [mpox_30to110-2-0.75-2-0to-30-2.py](mpox_30to110-2-0.75-2-0to-30-2.py)
+  * [mpox_30to110-2-0.75-2-5to30-2.py](mpox_30to110-2-0.75-2-5to30-2.py)
 
 * Simulations with a range of intervention timings (behavior change scenario 2, isolation scenario 1 vaccination scenario 2)
-  * mpox_30to110-2-0.25-1-0to-30-2.py
-  * mpox_30to110-2-0.25-1-5to30-2.py
-  * mpox_30to110-2-0.5-1-0to-30-2.py
-  * mpox_30to110-2-0.5-1-5to30-2.py
-  * mpox_30to110-2-0.75-1-0to-30-2.py
-  * mpox_30to110-2-0.75-1-5to30-2.py
+  * [mpox_30to110-2-0.25-1-0to-30-2.py](mpox_30to110-2-0.25-1-0to-30-2.py)
+  * [mpox_30to110-2-0.25-1-5to30-2.py](mpox_30to110-2-0.25-1-5to30-2.py)
+  * [mpox_30to110-2-0.5-1-0to-30-2.py](mpox_30to110-2-0.5-1-0to-30-2.py)
+  * [mpox_30to110-2-0.5-1-5to30-2.py](mpox_30to110-2-0.5-1-5to30-2.py)
+  * [mpox_30to110-2-0.75-1-0to-30-2.py](mpox_30to110-2-0.75-1-0to-30-2.py)
+  * [mpox_30to110-2-0.75-1-5to30-2.py](mpox_30to110-2-0.75-1-5to30-2.py)
 
 * Simulations with a range of interventions and isolation scenarios
-  * mpox_70-0-0.5-012-30-0.py
-  * mpox_70-1-0.5-012-30-0.py
-  * mpox_70-1-0.5-012-30-1.py
-  * mpox_70-2-0.5-012-30-0.py
-  * mpox_70-2-0.5-012-30-2.py
+  * [mpox_70-0-0.5-012-30-0.py](mpox_70-0-0.5-012-30-0.py)
+  * [mpox_70-1-0.5-012-30-0.py](mpox_70-1-0.5-012-30-0.py)
+  * [mpox_70-1-0.5-012-30-1.py](mpox_70-1-0.5-012-30-1.py)
+  * [mpox_70-2-0.5-012-30-0.py](mpox_70-2-0.5-012-30-0.py)
+  * [mpox_70-2-0.5-012-30-2.py](mpox_70-2-0.5-012-30-2.py)
 
 ### Data Processing and Visualization
 * concatenate_simulations.ipynb: concatenates output from embarassingly parallelized computing cluster output into one file
