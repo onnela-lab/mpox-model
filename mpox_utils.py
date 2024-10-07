@@ -693,8 +693,6 @@ def simulate(seed, N, n_initial, p_infect, steps, intervention_start, behavior_c
     pcontact_onetime = 1
     
     # vax efficacy per Deputy 2023
-    print("Vax delay")
-    print(vax_delay)
     fd_eff = 0.36
     fd_efftime = 14
     sd_eff = 0.66
@@ -723,11 +721,6 @@ def simulate(seed, N, n_initial, p_infect, steps, intervention_start, behavior_c
     daily_num_FD = np.rint(daily_num_FD*vax_inc).astype(int)
     daily_num_SD = np.rint(daily_num_SD*vax_inc).astype(int)
     
-    frequency_table = np.zeros((7, 7), dtype=int)
-    for x, y in zip(activity_strat, rel_activity):
-        frequency_table[x, y] += 1
-    print(frequency_table)
-    print(np.sum(frequency_table[1:,1:]))
     
     # if we start vaccinating before the disease spreads, add together the vaccines and distribute
     if vax_delay < 0:
