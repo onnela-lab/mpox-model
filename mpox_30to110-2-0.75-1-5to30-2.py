@@ -21,6 +21,10 @@ print("SEED")
 print(seed_num)
 seed = rand_seeds[seed_num]
 
+# set seeds for simulation
+random.seed(seed)
+np.random.seed(seed)
+
 date = sys.argv[2]
 
 # Get other arguments
@@ -46,7 +50,7 @@ all_repro = np.zeros((len(vax_delay)*len(intervention_start),len(rstar_list)+3))
 
 for d in range(len(vax_delay)):
     for s in range(len(intervention_start)):
-        E_out, I_out, R_out, infection_tracker = simulate(seed, N, n_initial, p_infect, steps, intervention_start[s], behavior_change, 
+        E_out, I_out, R_out, infection_tracker = simulate(N, n_initial, p_infect, steps, intervention_start[s], behavior_change, 
                  isolation, behavior_change_perc, vax_scenario, vax_delay[d], daily_num_FD, daily_num_SD)
 
         total_infection = [x+y+z for x,y,z in zip(E_out, I_out, R_out)]

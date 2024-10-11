@@ -675,8 +675,6 @@ def vaccinate(G, activity_strat, rel_activity, daily_num_FD, daily_num_SD, fd_ef
 def simulate(seed, N, n_initial, p_infect, steps, intervention_start, behavior_change, 
              isolation, behavior_change_perc, vax_scenario, vax_delay, daily_num_FD, daily_num_SD, vax_inc = 1):
     
-    random.seed(seed)
-    
     ############ Random Numbers
     # numbers for exposed state
     mu_e = 7.6 #from Charniga 2022
