@@ -34,6 +34,7 @@ date = '2025-02-05'
 behavior_change = [0,1,2]
 isolation = 1
 
+# Read in data from all simulations
 for d in range(len(behavior_change)):
     for num in range(len(N)):
         vax_scenario = behavior_change[d]
@@ -56,7 +57,7 @@ for d in range(len(behavior_change)):
         for i in range(1, reps+1):
         
             j = i-1
-            with open(str('/n/home04/ecrenshaw/mpox/output/' + str(sim_string) + '/mpox_' + str(sim_string) + '_' + str(i) + '_' + str(date) + '.pkl'), 'rb') as file: 
+            with open(str('output/' + str(sim_string) + '/mpox_' + str(sim_string) + '_' + str(i) + '_' + str(date) + '.pkl'), 'rb') as file: 
                 # A new file will be created 
                 res = pickle.load(file) 
 
@@ -79,7 +80,7 @@ for d in range(len(behavior_change)):
             activity_strat[:,j] = activity_strat1
               
                 
-        # analyze the data so I don't have to save all of it
+        # analyze the data and save only what's needed so you don't have to retain large files
             
         ## wait times
         wait_time_main_avg = [np.mean(x) for x in wait_time_main_list]
