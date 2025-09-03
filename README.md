@@ -55,8 +55,8 @@ Therefore, the file "mpox_30to110-2-0.5-1-0to-30-2.py" runs code for simulations
 ### Data Processing and Visualization
 * concatenate_simulations.ipynb: concatenates output from embarassingly parallelized computing cluster output into one file
 * create_figures_main: creates plots comparing interventions and intervention timings
-* create_figures_relationship_type.ipynb: creates plots showing simulation results by relationship tpe
-* create_cumulative_edge_graph.ipynb: creates plots showing how edges accumulate over time in the graph
+* create_figures_relationship_type.ipynb: creates plots showing simulation results by relationship type
+* create_figure_cumulative_edge_graph.ipynb: creates plots showing how edges accumulate over time in the graph
 
 ### Supplement Code
 This is code written to address reviewer responses and primarily creates information contained in the appendix of the manuscript.
@@ -64,6 +64,8 @@ This is code written to address reviewer responses and primarily creates informa
 * [mpox_N5.10.20k-70-012-0.5-1-30-012_SUPPLEMENT.py](Supplement%20Code/mpox_N5.10.20k-70-012-0.5-1-30-012_SUPPLEMENT.py) - this code runs the population size sensitivity analyses for N = 5,000, N = 10,000, and N = 20,000
 * [mpox_N40k-70-012-0.5-1-30-012_SUPPLEMENT.py](Supplement%20Code/mpox_N40k-70-012-0.5-1-30-012_SUPPLEMENT.py) - this code runs the population size sensitivity analyses for N = 40,000
 * [mpox_N80k-70-012-0.5-1-30-012_SUPPLEMENT.py](Supplement%20Code/mpox_N80k-70-012-0.5-1-30-012_SUPPLEMENT.py) - this code runs the population size sensitivity analyses for N = 80,000
+* [mpox_30to110-2-0.25range-1-0to-30-2_BW.py](Supplement%20Code/mpox_30to110-2-0.25range-1-0to-30-2_BW.py) - this code runs sensitivity analyses looking at best/worst case scenarios for the disease natural history parameters
+* [mpox_30to110-2-0.25range-1-0to-30-2_BW_lowprob.py](Supplement%20Code/mpox_30to110-2-0.25range-1-0to-30-2_BW_lowprob.py)- this code runs sensitivity analyses looking at best/worst case scenarios for the disease natural history parameters in the scenario with low transmission probability
 * [analyze_compress_supplement.py](Supplement%20Code/analyze_compress_supplement.py) - this code helps analyze the results from the population size code and saves datasets used for the figures
 * [clustering_simulations.py](Supplement%20Code/clustering_simulations.py) - this code creates the information for the network structure part of the appendix
 * [supplement_figures.py](Supplement%20Code/supplement_figures.py) - This code creates the new figures
