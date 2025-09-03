@@ -542,7 +542,7 @@ def spread(G, N, step, p_infect, status, pcontact_main, pcontact_casual, pcontac
                     contact = 0
                
                 # If infected, set status to P1
-                if contact ==1 and random.random() < p_infect * vax_eff[n]: #multiply by vax effect of the target
+                if contact ==1 and random.random() < p_infect * (1-vax_eff[n]): #multiply by vax effect of the target
                     status[n,0] = 0
                     status[n,1] = 1 # Set to exposed
                     infection_tracker[n, 0] = node # define who their infection source was
@@ -618,7 +618,7 @@ def vaccinate(G, activity_strat, rel_activity, daily_num_FD, daily_num_SD, fd_ef
         vtimes[sd_recieved,2] -=1
     
     ## update vaccine efficacy
-    vax_eff = [fd_eff if (vtimes[x,0] <= 0 and vtimes[x,2] > 0) else sd_eff if vtimes[x,2]<=0 else 1 for x in list(G.nodes)]
+    vax_eff = [fd_eff if (vtimes[x,0] <= 0 and vtimes[x,2] > 0) else sd_eff if vtimes[x,2]<=0 else 0 for x in list(G.nodes)]
     
     ## Allocate new vaccinations
     # identify nodes that have yet to be vaccinated
@@ -697,7 +697,7 @@ def vaccinate(G, activity_strat, rel_activity, daily_num_FD, daily_num_SD, fd_ef
 
 def simulate(N, n_initial, p_infect, steps, intervention_start, behavior_change, 
              isolation, behavior_change_perc, vax_scenario, vax_delay, daily_num_FD, daily_num_SD, vax_inc = 1, 
-             mu_e = 7.6, sigma_e = 4.9, mu_i = 27, sigma_i = 3):
+             mu_e = 7.6, sigma_e = 4.9, mu_i = 27, sigma_i = 3, fd_eff = 0.36, sd_eff = 0.66):
     
     ############ Random Numbers
     # numbers for exposed state
@@ -714,9 +714,7 @@ def simulate(N, n_initial, p_infect, steps, intervention_start, behavior_change,
     pcontact_onetime = 1
     
     # vax efficacy per Deputy 2023
-    fd_eff = 0.36
     fd_efftime = 14
-    sd_eff = 0.66
     sd_efftime = 14
     sd_time = 28
     
@@ -737,8 +735,8 @@ def simulate(N, n_initial, p_infect, steps, intervention_start, behavior_change,
     itimes = get_itimes(N, mu_i, sigma_i, clip_i, seed=None)
     vtimes = get_vtimes(N, fd_efftime, sd_time, sd_efftime)
     vax_stat = np.asarray([0]*N)
-    vax_eff = [1]*N
-    # Update Vax availability
+    vax_eff = [0]*N
+    ########## Adjust vaccine availability for population size
     daily_num_FD = np.rint(daily_num_FD*vax_inc).astype(int)
     daily_num_SD = np.rint(daily_num_SD*vax_inc).astype(int)
     

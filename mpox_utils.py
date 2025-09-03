@@ -497,42 +497,44 @@ def spread(G, N, step, p_infect, status, pcontact_main, pcontact_casual, pcontac
         neighbors = [x for x in list(G.neighbors(node)) if status[x,0] == 1]
         
         # Determine if there is contact and transmission for each neighbor
-        for n in neighbors:
-            
-            min_node = min(node,n)
-            max_node = max(node,n)
-            keylist = [key for w,v,key in G.edges(keys=True) if (w == min_node and v == max_node)]
-                        
-            for k in range(len(keylist)):
-            # Get the node order (min,max) to get the right edge
-                        
-                key = keylist[k]
-                        
-                # Determine if there is contact that day
-                if ((G.edges[min_node,max_node,key]['rel_type']=='Main' and random.random() < pm) 
-                    or (G.edges[min_node,max_node,key]['rel_type']=='Casual' and random.random() < pc) 
-                    or (G.edges[min_node,max_node,key]['rel_type']=='Onetime' and po == 1)):
-                    contact = 1
-                    total_contacts += 1
-                    
-                else:
-                    contact = 0
-               
-                # If infected, set status to P1
-                if contact ==1 and random.random() < p_infect * vax_eff[n]: #multiply by vax effect of the target
-                    status[n,0] = 0
-                    status[n,1] = 1 # Set to exposed
-                    infection_tracker[n, 0] = node # define who their infection source was
-                    infection_tracker[n, 1] = step # track what day they were infected
-                    treatment_delay[n] = treatment_seeking(step)
-                    
-                    # track type of edge
-                    if G.edges[min_node,max_node,key]['rel_type']=='Main':
-                        infection_tracker[n,3] = 1
-                    elif G.edges[min_node,max_node,key]['rel_type']=='Casual':
-                        infection_tracker[n,3] = 2
+        if len(neighbors)>0:
+            random.shuffle(neighbors)
+            for n in neighbors:
+
+                min_node = min(node,n)
+                max_node = max(node,n)
+                keylist = [key for w,v,key in G.edges(keys=True) if (w == min_node and v == max_node)]
+
+                for k in range(len(keylist)):
+                # Get the node order (min,max) to get the right edge
+
+                    key = keylist[k]
+
+                    # Determine if there is contact that day
+                    if ((G.edges[min_node,max_node,key]['rel_type']=='Main' and random.random() < pm) 
+                        or (G.edges[min_node,max_node,key]['rel_type']=='Casual' and random.random() < pc) 
+                        or (G.edges[min_node,max_node,key]['rel_type']=='Onetime' and po == 1)):
+                        contact = 1
+                        total_contacts += 1
+
                     else:
-                        infection_tracker[n,3] = 3
+                        contact = 0
+
+                    # If infected, set status to P1
+                    if contact ==1 and random.random() < p_infect * (1-vax_eff[n]): #multiply by vax effect of the target
+                        status[n,0] = 0
+                        status[n,1] = 1 # Set to exposed
+                        infection_tracker[n, 0] = node # define who their infection source was
+                        infection_tracker[n, 1] = step # track what day they were infected
+                        treatment_delay[n] = treatment_seeking(step)
+
+                        # track type of edge
+                        if G.edges[min_node,max_node,key]['rel_type']=='Main':
+                            infection_tracker[n,3] = 1
+                        elif G.edges[min_node,max_node,key]['rel_type']=='Casual':
+                            infection_tracker[n,3] = 2
+                        else:
+                            infection_tracker[n,3] = 3
                 
     return(G, status, total_contacts, infection_tracker)
             
@@ -595,7 +597,7 @@ def vaccinate(G, activity_strat, rel_activity, daily_num_FD, daily_num_SD, fd_ef
         vtimes[sd_recieved,2] -=1
     
     ## update vaccine efficacy
-    vax_eff = [fd_eff if (vtimes[x,0] <= 0 and vtimes[x,2] > 0) else sd_eff if vtimes[x,2]<=0 else 1 for x in list(G.nodes)]
+    vax_eff = [fd_eff if (vtimes[x,0] <= 0 and vtimes[x,2] > 0) else sd_eff if vtimes[x,2]<=0 else 0 for x in list(G.nodes)]
     
     ## Allocate new vaccinations
     # identify nodes that have yet to be vaccinated
@@ -672,8 +674,8 @@ def vaccinate(G, activity_strat, rel_activity, daily_num_FD, daily_num_SD, fd_ef
 # number_R: list of length(steps) of number of nodes recovered per day
 # infection_tracker: Nx4 matrix that tracks each node's infection source, infection time, recovery time, and via what type of relationship they were infected
 
-def simulate(seed, N, n_initial, p_infect, steps, intervention_start, behavior_change, 
-             isolation, behavior_change_perc, vax_scenario, vax_delay, daily_num_FD, daily_num_SD, vax_inc = 1):
+def simulate(N, n_initial, p_infect, steps, intervention_start, behavior_change, 
+             isolation, behavior_change_perc, vax_scenario, vax_delay, daily_num_FD, daily_num_SD, vax_inc = 1, fd_eff = 0.36, sd_eff = 0.66):
     
     ############ Random Numbers
     # numbers for exposed state
@@ -691,9 +693,7 @@ def simulate(seed, N, n_initial, p_infect, steps, intervention_start, behavior_c
     pcontact_onetime = 1
     
     # vax efficacy per Deputy 2023
-    fd_eff = 0.36
     fd_efftime = 14
-    sd_eff = 0.66
     sd_efftime = 14
     sd_time = 28
     
@@ -714,7 +714,7 @@ def simulate(seed, N, n_initial, p_infect, steps, intervention_start, behavior_c
     itimes = get_itimes(N, mu_i, sigma_i, clip_i, seed=None)
     vtimes = get_vtimes(N, fd_efftime, sd_time, sd_efftime)
     vax_stat = np.asarray([0]*N)
-    vax_eff = [1]*N
+    vax_eff = [0]*N
     # Update Vax availability
     daily_num_FD = np.rint(daily_num_FD*vax_inc).astype(int)
     daily_num_SD = np.rint(daily_num_SD*vax_inc).astype(int)
